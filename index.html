@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Лаба 14</title>
+  </head>
+  <body>
+    <script>
+      function part1() {
+        function camelize(str) {
+          let splitted = str.split("-");
+          for (let i = 1; i < splitted.length; i++) {
+            splitted[i] = splitted[i][0].toUpperCase() + splitted[i].slice(1);
+          }
+
+          return splitted.join("");
+        }
+        console.log("1)");
+        console.log(camelize("my-short-string"));
+      }
+      function part2() {
+        console.log("2)");
+        function filterRange(arr, a, b) {
+          return arr.filter((item) => item >= a && item <= b);
+        }
+        let arr = [5, 3, 8, 1];
+        console.log("arr:");
+        console.log(arr);
+        console.log("result filterRange():");
+        console.log(filterRange([5, 3, 8, 1], 1, 4));
+        console.log("arr:");
+        console.log(arr);
+      }
+      function part3() {
+        console.log("3)");
+        function filterRangeInPlace(arr, a, b) {
+          for (let i = 0; i < arr.length; i++) {
+            if (arr[i] < a || arr[i] > b) {
+              arr.splice(i, 1);
+            }
+          }
+        }
+        arr = [5, 3, 8, 1];
+        console.log("arr:");
+        console.log(arr);
+        filterRangeInPlace(arr, 1, 4);
+        console.log("arr after filterRangeInPlace():");
+        console.log(arr);
+      }
+      function part4() {
+        console.log("4)");
+        arr = [5, 2, 1, -10, 8];
+        console.log("arr:");
+        console.log(arr);
+        console.log("sorted:");
+        console.log(arr.sort((a, b) => b - a));
+      }
+
+      function part5() {
+        function copySorted(arr) {
+          return [...arr].sort();
+        }
+        console.log("5)");
+        arr = ["HTML", "JavaScript", "CSS"];
+        console.log("arr:");
+        console.log(arr);
+        console.log("sorted:");
+        console.log(copySorted(arr));
+        console.log("arr:");
+        console.log(arr);
+      }
+
+      function part6() {
+        console.log("6)");
+        class Calculator {
+          operations = [
+            { name: "+", fun: (a, b) => a + b },
+            { name: "-", fun: (a, b) => a - b },
+          ];
+
+          calculate(str) {
+            let [operand1, operationName, operand2] = str.split(" ");
+            operand1 = parseFloat(operand1);
+            operand2 = parseFloat(operand2);
+            return this.operations
+              .find((operation) => operation.name === operationName)
+              ?.fun(operand1, operand2);
+          }
+
+          addMethod(name, fun) {
+            this.operations.push({ name, fun });
+          }
+        }
+        const calculator = new Calculator();
+        console.log("3 + 7:");
+        console.log(calculator.calculate("3 + 7"));
+        console.log("2 ** 3:");
+        calculator.addMethod("**", (a, b) => a ** b);
+        console.log(calculator.calculate("2 ** 3"));
+      }
+
+      function part7() {
+        console.log("7)");
+        let ivan = { name: "Іван", age: 25 };
+        let petro = { name: "Петро", age: 30 };
+        let mariya = { name: "Марія", age: 28 };
+
+        let users = [ivan, petro, mariya];
+
+        console.log(users.map((user) => user.name));
+      }
+
+      function part8() {
+        console.log("8)");
+        let ivan = { name: "Іван", surname: "Іванко", id: 1 };
+        let petro = { name: "Петро", surname: "Петренко", id: 2 };
+        let mariya = { name: "Марія", surname: "Мрійко", id: 3 };
+
+        let users = [ivan, petro, mariya];
+
+        let usersMapped = users.map((user) => ({
+          fullName: `${user.name} ${user.surname}`,
+          id: user.id,
+        }));
+
+        console.log(usersMapped[0].id);
+        console.log(usersMapped[0].fullName);
+      }
+
+      function part9() {
+        console.log("9)");
+
+        function sortByAge(users) {
+          return users.sort((a, b) => a.age - b.age);
+        }
+        let ivan = { name: "Іван", age: 25 };
+        let petro = { name: "Петро", age: 30 };
+        let mariya = { name: "Марія", age: 28 };
+
+        let arr = [petro, ivan, mariya];
+        console.log("arr before:");
+        console.log([...arr]);
+        arr = sortByAge(arr);
+        console.log("arr after sort:");
+        console.log(arr);
+      }
+
+      function part10() {
+        console.log("10)");
+
+        function shuffle(array) {
+          let index = array.length;
+
+          while (index > 0) {
+            const randomIndex = Math.floor(Math.random() * index);
+            index--;
+
+            [array[index], array[randomIndex]] = [
+              array[randomIndex],
+              array[index],
+            ];
+          }
+
+          return array;
+        }
+
+        let arr = [1, 2, 3];
+        console.log(arr);
+        console.log(shuffle(arr));
+        console.log(shuffle(arr));
+      }
+
+      function part11() {
+        console.log("11)");
+
+        function getAverageAge(users) {
+          let sum = 0;
+          users.forEach((user) => {
+            sum += user.age;
+          });
+
+          return sum / users.length;
+        }
+
+        let john = { name: "John", age: 25 };
+        let pete = { name: "Pete", age: 30 };
+        let mary = { name: "Mary", age: 29 };
+
+        let arr = [john, pete, mary];
+
+        console.log(getAverageAge(arr));
+      }
+
+      function part12() {
+        console.log("12)");
+
+        function unique(arr) {
+          let newArr = [...arr];
+          for (let i = 0; i < newArr.length; i++) {
+            for (let j = i + 1; j < newArr.length; j++) {
+              if (newArr[i] === newArr[j]) {
+                newArr.splice(j, 1);
+                j--;
+              }
+            }
+          }
+
+          return newArr;
+        }
+
+        let strings = [
+          "Привіт",
+          "Світ",
+          "Привіт",
+          "Світ",
+          "Привіт",
+          "Привіт",
+          "Світ",
+          "Світ",
+          ":-O",
+        ];
+
+        console.log(unique(strings));
+      }
+
+      function part13() {
+        console.log("13)");
+
+        function groupById(arr) {
+          const result = arr.reduce(
+            (accumulator, item) => ({ ...accumulator, [item.id]: item }),
+            {}
+          );
+          return result;
+        }
+
+        let users = [
+          { id: "іван", name: "Іван Іванко", age: 20 },
+          { id: "ганна", name: "Ганна Іванко", age: 24 },
+          { id: "петро", name: "Петро Петренко", age: 31 },
+        ];
+
+        let usersById = groupById(users);
+
+        console.log(usersById);
+      }
+
+      part1();
+      part2();
+      part3();
+      part4();
+      part5();
+      part6();
+      part7();
+      part8();
+      part9();
+      part10();
+      part11();
+      part12();
+      part13();
+    </script>
+  </body>
+</html>
